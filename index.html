@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favicon Pong</title>
+    <link id="favicon" rel="icon" type="image/png" sizes="16x16">
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; transition: background 0.5s; }
+    </style>
+</head>
+<body>
+    <h1>Pong in Favicon!</h1>
+    <p>Player 1 (Left): W / S | Player 2 (Right): ArrowUp / ArrowDown</p>
+    <p id="score">Player 1: 0 | Player 2: 0</p>
+    <label for="speedSlider">Ball Speed:</label>
+    <input type="range" id="speedSlider" min="1" max="30" value="4">
+    <script>
+        const canvas = document.createElement("canvas");
+        canvas.width = canvas.height = 16;
+        const ctx = canvas.getContext("2d");
+
+        const favicon = document.getElementById("favicon");
+        const scoreDisplay = document.getElementById("score");
+        const speedSlider = document.getElementById("speedSlider");
+        const paddleHeight = 4, paddleWidth = 2;
+        let ball = { x: 8, y: 8, vx: Math.random() < 0.5 ? 1 : -1, vy: Math.random() < 0.5 ? 1 : -1 };
+        let paddles = [ { x: 1, y: 6 }, { x: 13, y: 6 } ];
+        let keys = {};
+        let scores = [0, 0];
+        let lastFrameTime = 0;
+        let tickCount = 0;
+        const frameDelay = 1000 / 60; // 60 FPS
+        let ballUpdateRate = 12; // Default ball update rate
+
+        speedSlider.addEventListener("input", () => {
+            ballUpdateRate = Math.round(45 / speedSlider.value);
+        });
+        
+        document.addEventListener("keydown", e => keys[e.key] = true);
+        document.addEventListener("keyup", e => keys[e.key] = false);
+
+        function flashScreen(color, winner) {
+            document.body.style.background = color;
+            scoreDisplay.textContent = `Player 1: ${scores[0]} | Player 2: ${scores[1]}`;
+            setTimeout(() => document.body.style.background = "", 1000);
+        }
+
+        function update() {
+            if (keys['w'] && paddles[0].y > 0) paddles[0].y -= 1;
+            if (keys['s'] && paddles[0].y < 12) paddles[0].y += 1;
+            if (keys['ArrowUp'] && paddles[1].y > 0) paddles[1].y -= 1;
+            if (keys['ArrowDown'] && paddles[1].y < 12) paddles[1].y += 1;
+
+            if (tickCount % ballUpdateRate === 0) {
+                ball.x += ball.vx;
+                ball.y += ball.vy;
+                
+                if (ball.y <= 0 || ball.y >= 15) ball.vy *= -1;
+                paddles.forEach(p => {
+                    if (ball.x === p.x && ball.y >= p.y && ball.y <= p.y + paddleHeight)
+                        ball.vx *= -1;
+                });
+                if (ball.x <= 0) {
+                    scores[1]++;
+                    flashScreen("blue", 1);
+                    resetBall();
+                } else if (ball.x >= 15) {
+                    scores[0]++;
+                    flashScreen("red", 0);
+                    resetBall();
+                }
+            }
+        }
+
+        function resetBall() {
+            ball = { x: 8, y: 8, vx: Math.random() < 0.5 ? 1 : -1, vy: Math.random() < 0.5 ? 1 : -1 };
+        }
+
+        function draw() {
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, 16, 16);
+            ctx.fillStyle = "white";
+            paddles.forEach(p => ctx.fillRect(p.x, p.y, paddleWidth, paddleHeight));
+            ctx.fillRect(ball.x, ball.y, 2, 2);
+        }
+
+        function updateFavicon() {
+            favicon.href = canvas.toDataURL("image/png");
+        }
+
+        function gameLoop(timestamp) {
+            if (timestamp - lastFrameTime >= frameDelay) {
+                lastFrameTime = timestamp;
+                tickCount++;
+                update();
+                draw();
+                updateFavicon();
+            }
+            requestAnimationFrame(gameLoop);
+        }
+
+        requestAnimationFrame(gameLoop);
+    </script>
+</body>
+</html>
