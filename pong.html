@@ -30,8 +30,8 @@
         let scores = [0, 0];
         let lastFrameTime = 0;
         let tickCount = 0;
-        const frameDelay = 1000 / 60; // 60 FPS
-        let ballUpdateRate = 12; // Default ball update rate
+        const frameDelay = 1000 / 60;
+        let ballUpdateRate = 12;
 
         speedSlider.addEventListener("input", () => {
             ballUpdateRate = Math.round(45 / speedSlider.value);
