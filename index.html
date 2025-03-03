@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link id="favicon" rel="icon" type="image/png" sizes="16x16" href="./favicon_main.ico">
+    <title>Favicon Games</title>
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        .game-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+        .game-card { padding: 10px; border: 1px solid black; cursor: pointer; }
+        .spinner { display: none; }
+    </style>
+</head>
+<body>
+    <h1>Favicon Games</h1>
+    <div class="game-list">
+        <div class="game-card" hx-get="2048.html" hx-target="#game-container" hx-trigger="click" hx-indicator=".spinner">2048</div>
+        <div class="game-card" hx-get="pong.html" hx-target="#game-container" hx-trigger="click" hx-indicator=".spinner">Pong</div>
+        <div class="game-card" hx-get="snake.html" hx-target="#game-container" hx-trigger="click" hx-indicator=".spinner">Snake</div>
+        <div class="game-card" hx-get="breaker.html" hx-target="#game-container" hx-trigger="click" hx-indicator=".spinner">Breaker</div>
+        <div class="game-card" hx-get="flappy-bird.html" hx-target="#game-container" hx-trigger="click" hx-indicator=".spinner">Flappy Bird</div>
+    </div>
+    
+    <div class="spinner">Loading...</div>
+    <div id="game-container"></div>
+</body>
+</html>
