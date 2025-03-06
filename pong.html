@@ -41,26 +41,26 @@
         <canvas id="gameCanvas" width="256" height="256"></canvas>
     </div>
     <script>
-        const canvas = document.createElement("canvas");
+        var canvas = document.createElement("canvas");
         canvas.width = canvas.height = 16;
-        const ctx = canvas.getContext("2d");
-        const gameCanvas = document.getElementById("gameCanvas");
+        var ctx = canvas.getContext("2d");
+        var gameCanvas = document.getElementById("gameCanvas");
         gameCanvas.style.display = "none";
-        const toggleButton = document.getElementById("toggleCanvas");
-        const gameCtx = gameCanvas.getContext("2d");  
+        var toggleButton = document.getElementById("toggleCanvas");
+        var gameCtx = gameCanvas.getContext("2d");  
 
-        const favicon = document.getElementById("favicon");
-        const scoreDisplay = document.getElementById("score");
-        const speedSlider = document.getElementById("speedSlider");
-        const paddleHeight = 4, paddleWidth = 2;
-        let ball = { x: 8, y: 8, vx: Math.random() < 0.5 ? 1 : -1, vy: Math.random() < 0.5 ? 1 : -1 };
-        let paddles = [ { x: 1, y: 6 }, { x: 13, y: 6 } ];
-        let keys = {};
-        let scores = [0, 0];
-        let lastFrameTime = 0;
-        let tickCount = 0;
-        const frameDelay = 1000 / 60;
-        let ballUpdateRate = 12;
+        var favicon = document.getElementById("favicon");
+        var scoreDisplay = document.getElementById("score");
+        var speedSlider = document.getElementById("speedSlider");
+        var paddleHeight = 4, paddleWidth = 2;
+        var ball = { x: 8, y: 8, vx: Math.random() < 0.5 ? 1 : -1, vy: Math.random() < 0.5 ? 1 : -1 };
+        var paddles = [ { x: 1, y: 6 }, { x: 13, y: 6 } ];
+        var keys = {};
+        var scores = [0, 0];
+        var lastFrameTime = 0;
+        var tickCount = 0;
+        var frameDelay = 1000 / 60;
+        var ballUpdateRate = 12;
 
         toggleButton.addEventListener("click", () => {
             gameCanvas.style.display = gameCanvas.style.display === "none" ? "block" : "none";

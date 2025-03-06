@@ -6,24 +6,82 @@
     <link id="favicon" rel="icon" type="image/png" sizes="16x16" href="./favicon_main.ico">
     <title>Favicon Games</title>
     <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <style>
-        body { text-align: center; font-family: Arial, sans-serif; }
+        html, body{
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            background-color: #1a0e13;
+            background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
+            animation: noise 2.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes noise {
+            0% { 
+                background-position: 0px 0px; 
+            }
+            50% {
+                background-position: 5px 5px; 
+            }
+            100% { 
+                background-position: 10px 10px; 
+            }
+        }
         .game-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
         .game-card { padding: 10px; border: 1px solid black; cursor: pointer; }
         .spinner { display: none; }
     </style>
 </head>
-<body>
-    <h1>Favicon Games</h1>
-    <div class="game-list">
-        <div class="game-card" hx-get="2048.html" hx-target="#game-container" hx-trigger="click" hx-indicator=".spinner">2048</div>
-        <div class="game-card" hx-get="pong.html" hx-target="#game-container" hx-trigger="click" hx-indicator=".spinner">Pong</div>
-        <div class="game-card" hx-get="snake.html" hx-target="#game-container" hx-trigger="click" hx-indicator=".spinner">Snake</div>
-        <div class="game-card" hx-get="breaker.html" hx-target="#game-container" hx-trigger="click" hx-indicator=".spinner">Breaker</div>
-        <div class="game-card" hx-get="flappy-bird.html" hx-target="#game-container" hx-trigger="click" hx-indicator=".spinner">Flappy Bird</div>
+<body class="bg-gray-900 text-gray-200 min-h-screen flex flex-col items-center justify-center font-mono">
+    <h1 class="text-4xl font-bold text-gray-100 drop-shadow-md mb-6">Favicon Games</h1>
+
+    <div class="game-list grid grid-cols-2 sm:grid-cols-3 gap-4">
+        <div class="game-card bg-purple-700 hover:bg-purple-600 px-6 py-4 rounded-lg shadow-lg cursor-pointer transition-all duration-200"
+            hx-get="2048.html" hx-target="#game-container" hx-trigger="click">
+            2048
+        </div>
+        <div class="game-card bg-purple-700 hover:bg-purple-600 px-6 py-4 rounded-lg shadow-lg cursor-pointer transition-all duration-200"
+            hx-get="pong.html" hx-target="#game-container" hx-trigger="click">
+            Pong
+        </div>
+        <div class="game-card bg-purple-700 hover:bg-purple-600 px-6 py-4 rounded-lg shadow-lg cursor-pointer transition-all duration-200"
+            hx-get="snake.html" hx-target="#game-container" hx-trigger="click">
+            Snake
+        </div>
+        <div class="game-card bg-purple-700 hover:bg-purple-600 px-6 py-4 rounded-lg shadow-lg cursor-pointer transition-all duration-200"
+            hx-get="breaker.html" hx-target="#game-container" hx-trigger="click">
+            Breaker
+        </div>
+        <div class="game-card bg-purple-700 hover:bg-purple-600 px-6 py-4 rounded-lg shadow-lg cursor-pointer transition-all duration-200"
+            hx-get="flappy-bird.html" hx-target="#game-container" hx-trigger="click">
+            Flappy Bird
+        </div>
     </div>
-    
-    <div class="spinner">Loading...</div>
-    <div id="game-container"></div>
+
+    <!-- <div id="game-container" class="mt-6 w-full max-w-2xl bg-gray-800 p-6 rounded-lg shadow-lg"></div> -->
+
+    <div id="game-container" hx-on::before-request="clearStyles();"></div>
+
+    <script>
+        function clearStyles() {
+            document.querySelectorAll(".dynamic-style").forEach(style => style.remove());
+        }
+
+        document.body.addEventListener("htmx:afterSwap", function (event) {
+            let tempDiv = document.createElement("div");
+            tempDiv.innerHTML = event.detail.xhr.responseText;
+
+            tempDiv.querySelectorAll("style").forEach(style => {
+                let newStyle = document.createElement("style");
+                newStyle.classList.add("dynamic-style"); // Mark styles for cleanup
+                newStyle.innerHTML = style.innerHTML;
+                document.head.appendChild(newStyle);
+            });
+        });
+    </script>
+
+
 </body>
 </html>

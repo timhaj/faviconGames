@@ -49,27 +49,27 @@
         <canvas id="gameCanvas" width="256" height="256"></canvas>        
     </div>
     <script>
-        const canvas = document.createElement("canvas");
+        var canvas = document.createElement("canvas");
         canvas.width = canvas.height = 16;
-        const ctx = canvas.getContext("2d");
-        const favicon = document.getElementById("favicon");
-        const speedSlider = document.getElementById("speedSlider");
-        const gameCanvas = document.getElementById("gameCanvas");
+        var ctx = canvas.getContext("2d");
+        var favicon = document.getElementById("favicon");
+        var speedSlider = document.getElementById("speedSlider");
+        var gameCanvas = document.getElementById("gameCanvas");
         gameCanvas.style.display = "none";
-        const toggleButton = document.getElementById("toggleCanvas");
-        const gameCtx = gameCanvas.getContext("2d");  
+        var toggleButton = document.getElementById("toggleCanvas");
+        var gameCtx = gameCanvas.getContext("2d");  
 
-        let paddle = { x: 6, width: 4 };
-        let ball = { x: 8, y: 12, dx: 1, dy: -1 };
-        let bricks = [];
-        const brickRows = 9;
-        const brickCols = [4, 3];
-        const brickWidth = 4;
-        const brickHeight = 1;
-        let tickCounter = 0;
-        let ballUpdateRate = 12;
+        var paddle = { x: 6, width: 4 };
+        var ball = { x: 8, y: 12, dx: 1, dy: -1 };
+        var bricks = [];
+        var brickRows = 9;
+        var brickCols = [4, 3];
+        var brickWidth = 4;
+        var brickHeight = 1;
+        var tickCounter = 0;
+        var ballUpdateRate = 12;
 
-        let gameInterval = setInterval(gameLoop, 1000 / 60);
+        var gameInterval = setInterval(gameLoop, 1000 / 60);
 
         toggleButton.addEventListener("click", () => {
             gameCanvas.style.display = gameCanvas.style.display === "none" ? "block" : "none";
@@ -80,10 +80,10 @@
 
         function initBricks() {
             bricks = [];
-            for (let row = 0; row < brickRows; row++) {
-                let cols = brickCols[row % 2];
-                let offset = (16 - (cols * brickWidth)) / 2;
-                for (let col = 0; col < cols; col++) {
+            for (var row = 0; row < brickRows; row++) {
+                var cols = brickCols[row % 2];
+                var offset = (16 - (cols * brickWidth)) / 2;
+                for (var col = 0; col < cols; col++) {
                     bricks.push({ x: offset + col * brickWidth, y: row * brickHeight, width: brickWidth, height: brickHeight, active: true });
                 }
             }
@@ -96,7 +96,7 @@
         });
 
         speedSlider.addEventListener("input", () => {
-            let speedValue = parseInt(speedSlider.value, 10);
+            var speedValue = parseInt(speedSlider.value, 10);
             ballUpdateRate = Math.max(1, Math.floor(60 / speedValue));
         });
 

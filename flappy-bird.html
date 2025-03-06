@@ -45,25 +45,25 @@
         <canvas id="gameCanvas" width="256" height="256"></canvas>
     </div>
     <script>
-        const canvas = document.createElement("canvas");
+        var canvas = document.createElement("canvas");
         canvas.width = canvas.height = 16;
-        const ctx = canvas.getContext("2d");
-        const favicon = document.getElementById("favicon");
-        const scoreDisplay = document.getElementById("score");
-        const gameCanvas = document.getElementById("gameCanvas");
+        var ctx = canvas.getContext("2d");
+        var favicon = document.getElementById("favicon");
+        var scoreDisplay = document.getElementById("score");
+        var gameCanvas = document.getElementById("gameCanvas");
         gameCanvas.style.display = "none";
-        const toggleButton = document.getElementById("toggleCanvas");
-        const gameCtx = gameCanvas.getContext("2d");   
+        var toggleButton = document.getElementById("toggleCanvas");
+        var gameCtx = gameCanvas.getContext("2d");   
 
-        let birdY = 6;
-        let velocity = 0;
-        let pipes = [{ x: 16, gapY: Math.floor(Math.random() * 7) + 1 }];
-        let score = 0;
-        const gravity = 1;
-        const jump = -3;
-        const pipeSpeed = 1;
-        const pipeInterval = 8;
-        let frameCount = 0;
+        var birdY = 6;
+        var velocity = 0;
+        var pipes = [{ x: 16, gapY: Math.floor(Math.random() * 7) + 1 }];
+        var score = 0;
+        var gravity = 1;
+        var jump = -3;
+        var pipeSpeed = 1;
+        var pipeInterval = 8;
+        var frameCount = 0;
         
         toggleButton.addEventListener("click", () => {
             gameCanvas.style.display = gameCanvas.style.display === "none" ? "block" : "none";
@@ -107,7 +107,7 @@
         }
         
         function checkCollision() {
-            for (const pipe of pipes) {
+            for (var pipe of pipes) {
                 if (pipe.x === 3) {
                     if (birdY < pipe.gapY || birdY + 3 > pipe.gapY + 6) {
                         return true;
@@ -135,8 +135,8 @@
             gameCtx.fillRect(0, 0, 256, 256);
             gameCtx.fillStyle = "green";
             pipes.forEach(pipe => {
-                const scaledX = pipe.x * 16;
-                const scaledGapY = pipe.gapY * 16;
+                var scaledX = pipe.x * 16;
+                var scaledGapY = pipe.gapY * 16;
                 gameCtx.fillRect(scaledX, 0, 48, scaledGapY);
                 gameCtx.fillRect(scaledX, scaledGapY + 96, 48, 256 - (scaledGapY + 96));
             });
